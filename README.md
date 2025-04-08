@@ -99,18 +99,6 @@ The CNN is tailored for 3D medical imaging with the following features:
   - Batch normalization to stabilize the training process  
   - Integrated signal processing layers for enhanced feature extraction
 
-### Data Pipeline
-
-1. **Data Loading:** Retrieve MRI data from Google Drive.  
-2. **Preprocessing:**  
-   - Process the NIfTI-1 data and apply signal enhancements  
-   - Standardize scans with affine transformations  
-3. **Feature Extraction & Normalization:**  
-   - Isolate critical features from MRI scans  
-   - Normalize the data for model input  
-4. **Dataset Splitting:** Create training and validation sets.  
-5. **Model Training:** Train the CNN with continuous validation and hyperparameter tuning.  
-6. **Model Testing:** Evaluate model performance using appropriate metrics.
 
 ---
 
