@@ -1,9 +1,9 @@
 # Alzheimer’s Disease Detection using CNN on MRI Scans
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 
-A deep learning project for the classification of Alzheimer's disease from MRI scans of the left hippocampus—enhanced with advanced signal processing techniques for superior medical image analysis.
+A deep learning project for the binary classification of Alzheimer's disease from MRI scans of the left hippocampus—enhanced with advanced signal processing techniques for superior medical image analysis.
 
 ---
 
@@ -15,80 +15,64 @@ A deep learning project for the classification of Alzheimer's disease from MRI s
 - [Data Description](#data-description)
 - [Technical Implementation](#technical-implementation)
 - [Results](#results)
-- [Future Improvements](#future-improvements)
-- [Notes](#notes)
+
 
 ---
 
 ## Overview
 
-This project leverages a **Convolutional Neural Network (CNN)** optimized for 3D medical imaging to detect Alzheimer’s disease. By integrating advanced signal processing methods, the model enhances the quality and interpretability of MRI scans, providing a robust tool for early diagnosis.
+This project leverages a **Convolutional Neural Network (CNN)** designed for 3D medical imaging to detect Alzheimer’s disease. By incorporating sophisticated signal processing methods—including image preprocessing, spatial normalization, and feature extraction—the model improves the quality and interpretability of MRI scans, ultimately supporting enhanced diagnostic accuracy.
 
 ---
 
 ## Project Structure
 
-The repository is divided into three main components:
+The repository is organized into three main components:
 
 1. **Patient Data Processing**  
    *File: [`Part_I_Patient_data.ipynb`](Part_I_Patient_data.ipynb)*  
-   - Preprocessing and feature engineering for demographic and clinical data  
-   - Integration with MRI image data  
-   - Signal quality assessment and validation  
+   - Processes patient demographic and clinical data  
+   - Performs data cleaning, feature engineering, and integration with MRI data
 
 2. **MRI Data Processing**  
    *File: [`Part_II_MRI_data.ipynb`](Part_II_MRI_data.ipynb)*  
-   - Preprocessing of MRI scans  
-   - Signal processing pipeline:
-     - **Noise Reduction:** Gaussian filtering, Median filtering, Adaptive thresholding  
-     - **Image Normalization:** Standardization, Contrast enhancement  
-     - **Feature Extraction:** Edge detection, Texture analysis, Wavelet transforms  
-   - Data augmentation: rotations, intensity variations, spatial transformations
+   - Loads and preprocesses MRI scans in NIfTI-1 format (`.nii.gz`)  
+   - Utilizes `scipy.ndimage` for signal processing  
+   - Visualizes data, extracts features, and applies affine spatial transformations
 
 3. **CNN Implementation**  
    *File: [`Part_III_CNN.ipynb`](Part_III_CNN.ipynb)*  
-   - Building and training the CNN model architecture  
-   - Model evaluation and testing  
-   - Integration of signal processing into the model pipeline
+   - Defines the CNN model architecture optimized for 3D imaging  
+   - Manages training, validation, and testing  
+   - Integrates signal processing techniques directly into the model pipeline
 
 ---
 
 ## Signal Processing Techniques
 
 ### Preprocessing Pipeline
-- **Noise Reduction:**  
-  - Gaussian filtering to suppress noise  
-  - Median filtering to remove salt-and-pepper artifacts  
-  - Adaptive thresholding for dynamic enhancement
 
-- **Image Enhancement:**  
-  - Histogram equalization for contrast improvement  
-  - Intensity normalization (z-score standardization)  
-  - Spatial normalization to a standard anatomical template
+- **Data Loading & Header Analysis:**  
+  Load MRI scans in NIfTI-1 format and analyze header information.
 
-- **Feature Extraction:**  
-  - Edge detection using Sobel and Canny operators  
-  - Texture analysis via Gabor filters  
-  - Multi-scale analysis with wavelet transforms  
-  - Texture classification with local binary patterns
+- **Image Preprocessing:**  
+  - Extract image data and apply noise reduction techniques using `scipy.ndimage`
+  - Perform affine spatial transformation to standardize image orientations
 
-- **Data Augmentation:**  
-  - Random rotations (±15°)  
-  - Intensity scaling (±20%)  
-  - Elastic deformations  
-  - Random cropping and padding
+- **Feature Extraction & Normalization:**  
+  - Extract significant imaging features for diagnostic relevance  
+  - Normalize features to optimize the input for CNN processing
 
 ---
 
 ## Data Description
 
 - **Input:** 3D MRI scans of the left hippocampus  
-- **Dimensions:** `30 x 40 x 30` tensors  
-- **Signal Processing Parameters:**
-  - Sampling rate: *[Specify if available]*
-  - Resolution: *[Specify if available]*
-  - Optimized for signal-to-noise ratio enhancement  
-- **Classification Classes:**
+- **Format:** NIfTI-1 (`.nii.gz`)  
+- **Dimensions:** 256 x 256 x 160 voxels  
+- **Voxel Size:** 1 x 1 x 1 mm  
+- **Data Type:** int16  
+- **Classification Labels:**
   - **Cognitively Normal (False)**
   - **Alzheimer's Disease (True)**
 
@@ -97,59 +81,45 @@ The repository is divided into three main components:
 ## Technical Implementation
 
 ### Dependencies
-- **Deep Learning:** PyTorch
-- **Cloud Environment:** Google Colab
-- **Image & Signal Processing Libraries:**
-  - SciPy  
-  - OpenCV  
-  - scikit-image  
+
+- **Deep Learning:** PyTorch  
+- **Cloud Environment:** Google Colab  
+- **Signal Processing & Neuroimaging Libraries:**
+  - `scipy.ndimage` for image processing  
+  - `nibabel` for handling NIfTI-1 files  
+  - `nilearn` for neuroimaging data analysis  
 - **Data Science Tools:** NumPy, Pandas, etc.
 
 ### Model Architecture
+
+The CNN is tailored for 3D medical imaging with the following features:
 - **Input Tensor Size:** 30 x 40 x 30  
 - **Output:** Binary classification (Alzheimer's vs. Cognitively Normal)  
-- **Key Features:**
+- **Key Components:**
   - Custom convolutional layers with specialized kernels  
-  - Pooling layers to reduce dimensionality  
-  - Batch normalization to stabilize the signal  
-  - Integrated signal processing layers for improved feature extraction
+  - Pooling layers for dimensionality reduction  
+  - Batch normalization to stabilize the training process  
+  - Integrated signal processing layers for enhanced feature extraction
 
 ### Data Pipeline
-1. **Data Loading:** Retrieve MRI data from Google Drive  
-2. **Preprocessing:** Apply signal enhancement and noise reduction  
-3. **Feature Extraction:** Isolate significant image features  
-4. **Data Splitting:** Create training and validation sets  
-5. **Model Training:** Optimize training with continuous validation feedback  
-6. **Model Testing:** Evaluate using a comprehensive testing framework
+
+1. **Data Loading:** Retrieve MRI data from Google Drive.  
+2. **Preprocessing:**  
+   - Process the NIfTI-1 data and apply signal enhancements  
+   - Standardize scans with affine transformations  
+3. **Feature Extraction & Normalization:**  
+   - Isolate critical features from MRI scans  
+   - Normalize the data for model input  
+4. **Dataset Splitting:** Create training and validation sets.  
+5. **Model Training:** Train the CNN with continuous validation and hyperparameter tuning.  
+6. **Model Testing:** Evaluate model performance using appropriate metrics.
 
 ---
 
 ## Results
 
-The CNN model achieves robust binary classification accuracy in detecting Alzheimer's disease by effectively leveraging advanced signal processing techniques integrated within the training pipeline.
+The CNN model demonstrates robust binary classification performance for Alzheimer's disease detection. With the integration of advanced signal processing techniques, the model significantly improves the accuracy and reliability of interpreting 3D MRI scans of the left hippocampus.
 
 ---
 
-## Future Improvements
-
-- **Multi-Modality Integration:** Incorporate additional medical imaging data (e.g., PET, CT)  
-- **Enhanced Signal Processing:**  
-  - Deep learning–based denoising methods  
-  - Advanced wavelet transforms  
-  - Non-local means filtering and super-resolution techniques  
-- **Model Ensemble:** Develop ensemble methods to boost accuracy  
-- **Explainability:** Incorporate explainable AI frameworks for better clinical interpretability  
-- **Real-Time Optimization:** Optimize the processing pipeline for real-time data analysis
-
----
-
-## Notes
-
-- **Dataset:** MRI scans are stored in Google Drive; ensure access permissions are correctly configured.  
-- **Data Format:** Training data provided in `.pt` format (PyTorch tensors).  
-- **Customization:** Signal processing parameters are configurable to cater to different imaging conditions and research needs.
-
----
-
-Happy coding and best of luck with advancing Alzheimer’s diagnostics!
-
+Happy coding and best of luck in advancing Alzheimer’s diagnostics!
