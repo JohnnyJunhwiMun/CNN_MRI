@@ -1,7 +1,5 @@
 # Alzheimer’s Disease Detection using CNN on MRI Scans
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
-[![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 
 A deep learning project for the binary classification of Alzheimer's disease from MRI scans of the left hippocampus—enhanced with advanced signal processing techniques for superior medical image analysis.
 
